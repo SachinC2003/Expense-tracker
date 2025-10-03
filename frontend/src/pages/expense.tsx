@@ -3,14 +3,21 @@ import { Button } from "@/components/ui/button";
 import AddExpense from "@/components/AddExpense"
 import { use, useEffect, useState } from "react";
 import axios from "axios";
+import Edit from "@/components/Edit";
+import Delete from "@/components/ui/Delete";
 interface IExpense {
   name: string;
   amount: number;
   date: string;
+  category: string;
+  description: string;
 }
 function Expense() {
   const [isOpen, setIsOpen] = useState(false);
   const [expenses, setExpenses] = useState([]);
+  const [selectedExpense, setSelectedExpense] = useState<IExpense | null>(null);
+  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const fetchExpenses = async () => {
     try {
       const response = await axios.get("http://localhost:5000/api/v1/expense");
@@ -39,18 +46,46 @@ function Expense() {
         
         {/* Example expense items */}
         {expenses?.map((expenses: IExpense, index) => (
-          <div key={index} className="flex justify-between p-3 bg-white rounded shadow">
-            <span>{expenses.name}</span>
-            <span>${expenses.amount}</span>
+          <div key={index} className="flex flex-row justify-between p-3 bg-white rounded shadow pr-10 pl-10">
+            <div className="flex flex-col gap-1 w-[80%]">
+                <div className="flex justify-between">
+                  <span className="font-bold size-15">{expenses.name} - {expenses?.category}</span>
+                  <span className="font-medium">{new Date(expenses.date).toLocaleDateString()}</span>
+                </div>
+                <div className="flex justify-between">
+                    <span>{expenses.description}</span>
+                    <span>Rs {expenses.amount}</span>
+                </div>
+            </div>
+            <div className="flex items-center gap-3">
+                <Button
+                onClick={()=>{
+                    setSelectedExpense(expenses);
+                    setIsEditOpen(true);
+                }}
+                 className="bg-orange-500 hover:bg-red-600 text-white">
+                    Edit
+                 </Button>
+                <Button
+                 onClick={()=>{
+                    setSelectedExpense(expenses);
+                    setIsDeleteOpen(true);
+                 }}
+                 className="bg-red-500 hover:bg-red-600 text-white">
+                   Delete
+                 </Button>
+            </div>
           </div>
         ))}
-        <div className="flex justify-between p-3 bg-white rounded shadow">
-          <span>Electricity Bill</span>
-          <span>$120</span>
-        </div>
       </div>
       {isOpen && (
         <AddExpense isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      )}
+      {isEditOpen && (
+        <Edit isOpen={isEditOpen} onClose={() => setIsEditOpen(false)} data={selectedExpense} isExpense={true}/>
+      )}
+      {isDeleteOpen && (
+        <Delete isOpen={isDeleteOpen} onClose={() => setIsDeleteOpen(false)} data={selectedExpense} isExpense={true}/>
       )}
     </div>
   );

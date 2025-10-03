@@ -46,4 +46,39 @@ expenserRouter.get("/", async (req: Request, res: Response) => {
   }
 });
    
+expenserRouter.put("/edit", async(req: Request, res: Response) =>{
+    try{
+        const {user, name, amount, description, category, date, id} = req.body;
+        if(!user || !name || !amount || !category || !id){
+            return res.status(400).json({success: false, message: "Please provide all required fields"});
+        } 
+
+        const exp = await Expense.findByIdAndUpdate(id, {user, name, amount, description, category, date}, {new: true});
+        if(!exp){
+            return res.status(500).json({success: false, message: "Failed to update income"});
+        } 
+        res.status(200).json({success: true, message: "Expense updated successfully", data: exp});
+    }catch(err){  
+        console.error(err);
+        res.status(500).json({success: false, message: "Server error"});
+    }
+});
+
+expenserRouter.delete("/delete/:id", async(req: Request, res: Response) =>{
+    try{
+      const {id} = req.params;
+        if(!id){
+            return res.status(400).json({success: false, message: "Please provide all required fields"});
+        }
+        const exp = await Expense.findByIdAndDelete(id);
+        if(!exp){
+            return res.status(500).json({success: false, message: "Failed to delete expense"});
+        } 
+        res.status(200).json({success: true, message: "Expense delete successfully", data: exp});
+    }catch(err){  
+        console.error(err);
+        res.status(500).json({success: false, message: "Server error"});
+    }
+});
+
 module.exports = expenserRouter;

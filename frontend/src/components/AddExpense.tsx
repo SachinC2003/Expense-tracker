@@ -75,9 +75,10 @@ const AddExpense: React.FC<AddExpenseProps> = ({ isOpen, onClose }) => {
                 <SelectValue placeholder="category" />
             </SelectTrigger>
             <SelectContent>
-                <SelectItem value="college">Colleg</SelectItem>
-                <SelectItem value="home">Home</SelectItem>
-                <SelectItem value="frined">Frineds</SelectItem>
+                <SelectItem value="entertanment">Entertanment</SelectItem>
+                <SelectItem value="food">Food</SelectItem>
+                <SelectItem value="bills">Bills</SelectItem>
+                <SelectItem value="transport">Transport</SelectItem>
             </SelectContent>
           </Select>
           <input type="date" className="border px-3 py-2 rounded" />
