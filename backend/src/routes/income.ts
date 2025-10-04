@@ -37,7 +37,24 @@ incomeRouter.get("/", async (req: Request, res: Response) => {
         ]
       }
     });
-    console.log('Fetched income:', income);
+    res.status(200).json({ success: true, income });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
+incomeRouter.get("/:year", async (req: Request, res: Response) => {
+  try {
+    const {year} = req.params;
+    const yearNum = parseInt(year);
+
+    // Fetch income for the specified year
+    const income = await Income.find({
+      $expr: {
+        $eq: [{ $year: "$date" }, yearNum]
+      }
+    });
     res.status(200).json({ success: true, income });
   } catch (err) {
     console.error(err);

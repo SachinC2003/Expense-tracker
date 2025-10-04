@@ -81,7 +81,12 @@ const AddExpense: React.FC<AddExpenseProps> = ({ isOpen, onClose }) => {
                 <SelectItem value="transport">Transport</SelectItem>
             </SelectContent>
           </Select>
-          <input type="date" className="border px-3 py-2 rounded" />
+          <input
+            type="date"
+            className="border px-3 py-2 rounded"
+            value={date instanceof Date ? date.toISOString().split("T")[0] : date} 
+            onChange={(e) => setDate(new Date(e.target.value))} // convert string to Date
+          />
 
           <div className="flex justify-end space-x-2">
             <button

@@ -2,9 +2,9 @@ import express, {application} from "express"
 import {Request, Response} from "express"
 import { Expense } from "../db";
 
-const expenserRouter = express.Router();
+const expenseRouter = express.Router();
 
-expenserRouter.post("/", async(req: Request, res: Response) =>{
+expenseRouter.post("/", async(req: Request, res: Response) =>{
     try{
         const {user, name, amount, description, category, date} = req.body;
         console.log(req.body);
@@ -23,21 +23,14 @@ expenserRouter.post("/", async(req: Request, res: Response) =>{
     }
 });
 
-expenserRouter.get("/", async (req: Request, res: Response) => {
+expenseRouter.get("/", async (req: Request, res: Response) => {
   try {
     const now = new Date();
     const currentMonth = now.getMonth(); // 0 = January
     const currentYear = now.getFullYear();
 
     // Fetch expenses for current month
-    const expenses = await Expense.find({
-      $expr: {
-        $and: [
-          { $eq: [{ $month: "$date" }, currentMonth + 1] }, // $month is 1-based
-          { $eq: [{ $year: "$date" }, currentYear] }
-        ]
-      }
-    });
+    const expenses = await Expense.find();
     console.log('Fetched expenses:', expenses);
     res.status(200).json({ success: true, expenses });
   } catch (err) {
@@ -45,8 +38,26 @@ expenserRouter.get("/", async (req: Request, res: Response) => {
     res.status(500).json({ success: false, message: "Server error" });
   }
 });
-   
-expenserRouter.put("/edit", async(req: Request, res: Response) =>{
+
+expenseRouter.get("/:year", async (req: Request, res: Response) => {
+  try {
+    const {year} = req.params;
+    const yearNum = parseInt(year);
+
+    // Fetch expense for the specified year
+    const expense = await Expense.find({
+      $expr: {
+        $eq: [{ $year: "$date" }, yearNum]
+      }
+    });
+    res.status(200).json({ success: true, expense });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
+expenseRouter.put("/edit", async(req: Request, res: Response) =>{
     try{
         const {user, name, amount, description, category, date, id} = req.body;
         if(!user || !name || !amount || !category || !id){
@@ -64,7 +75,7 @@ expenserRouter.put("/edit", async(req: Request, res: Response) =>{
     }
 });
 
-expenserRouter.delete("/delete/:id", async(req: Request, res: Response) =>{
+expenseRouter.delete("/delete/:id", async(req: Request, res: Response) =>{
     try{
       const {id} = req.params;
         if(!id){
@@ -81,4 +92,4 @@ expenserRouter.delete("/delete/:id", async(req: Request, res: Response) =>{
     }
 });
 
-module.exports = expenserRouter;
+module.exports = expenseRouter;

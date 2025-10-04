@@ -76,16 +76,21 @@ const AddIncome: React.FC<AddIncomeProps> = ({ isOpen, onClose }) => {
                 <SelectValue placeholder="Category" />
               </SelectTrigger>
               <SelectContent className="z-50">
-                <SelectItem value="entertainment">Entertainment</SelectItem>
-                <SelectItem value="food">Food</SelectItem>
-                <SelectItem value="bills">Bills</SelectItem>
-                <SelectItem value="transport">Transport</SelectItem>
+                <SelectItem value="salary">Salary</SelectItem>
+                <SelectItem value="farm">Farm</SelectItem>
+                <SelectItem value="business">Business</SelectItem>
+                <SelectItem value="other">Other</SelectItem>
               </SelectContent>
             </Select>
           </div>
 
-          <input type="date" className="border px-3 py-2 rounded" />
-
+          <input
+            type="date"
+            className="border px-3 py-2 rounded"
+            value={date instanceof Date ? date.toISOString().split("T")[0] : date} 
+            onChange={(e) => setDate(new Date(e.target.value))} // convert string to Date
+          />
+          
           <div className="flex justify-end space-x-2">
             <button
               type="button"

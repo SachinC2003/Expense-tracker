@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -26,6 +26,12 @@ const Edit: React.FC<EditProps> = ({ isOpen, onClose, data, isExpense }) => {
     const [date, setDate] = useState(data.date || new Date());
     const [apiEndpoint, setApiEndpoint] = useState(isExpense ? "expense/edit" : "income/edit");
     const [ismass, setIsmass] = useState(isExpense ? "Expense" : "Income");
+
+    const options = useMemo(() => {
+        return isExpense === true
+          ? ["Entertainment", "Food", "Bills", "Transport"]
+          : ["Salary", "Farm", "Business", "Others"];
+      }, [isExpense]);
 
     const handelEdit = async() => {
         try{
@@ -83,11 +89,7 @@ const Edit: React.FC<EditProps> = ({ isOpen, onClose, data, isExpense }) => {
             <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="category" />
             </SelectTrigger>
-            <SelectContent>
-                <SelectItem value="college">Colleg</SelectItem>
-                <SelectItem value="home">Home</SelectItem>
-                <SelectItem value="frined">Frineds</SelectItem>
-            </SelectContent>
+            <SelectContent> {options.map((opt) => ( <SelectItem key={opt} value={opt}> {opt} </SelectItem> ))} </SelectContent>
           </Select>
           <input type="date" className="border px-3 py-2 rounded" />
 

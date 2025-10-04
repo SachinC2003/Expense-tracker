@@ -45,7 +45,7 @@ function Register() {
       <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-8 text-center">
         <h1 className="text-2xl font-bold text-gray-800 mb-2">Expense Tracker</h1>
         <img
-          src="/expence-tracker.png"
+          src="/logo.png"
           alt="Logo"
           className="w-20 h-20 mx-auto mb-6"
         />

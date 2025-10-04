@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -26,14 +26,24 @@ ChartJS.register(
   Legend
 );
 
-function Charts() {
+interface ChartsProps {
+  data: number[];
+  categoryWise: number[];
+  sector: String
+};
+const Charts: React.FC<ChartsProps> = ({ data, categoryWise, sector}) => {
   // Dummy data for line chart
+  const pieLabel = useMemo(() => {
+    return sector.toLowerCase() === "income"
+      ? ["salary", "farm", "business", "other"]
+      : ["entertainment", "food", "bills", "transport"];
+  }, [sector]);
   const lineData = {
-    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
     datasets: [
       {
-        label: "Expenses ($)",
-        data: [120, 200, 150, 300, 250, 400],
+        label: "Expenses (Rs)",
+        data: data,
         borderColor: "rgb(34,197,94)", // Tailwind green-500
         backgroundColor: "rgba(34,197,94,0.5)",
         tension: 0.3,
@@ -42,11 +52,11 @@ function Charts() {
   };
 
   const pieData = {
-    labels: ["Food", "Transport", "Bills", "Entertainment"],
+    labels: pieLabel,
     datasets: [
       {
         label: "Category",
-        data: [40, 20, 25, 15],
+        data: categoryWise,
         backgroundColor: [
           "rgb(251,191,36)", // yellow-400
           "rgb(34,197,94)",  // green-500
@@ -59,18 +69,21 @@ function Charts() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row gap-6 h-90">
+    <div className="flex flex-col md:flex-row gap-6">
       {/* Line Chart */}
       <div className="flex-1 bg-white p-4 rounded shadow">
-        <h2 className="text-xl font-semibold mb-2 text-center">Expenses Over Time</h2>
+        <h2 className="text-xl font-semibold mb-2 text-center">{sector} Over Time</h2>
         <Line data={lineData} />
       </div>
 
       {/* Pie Chart */}
-      <div className="flex-1 bg-white p-4 rounded shadow" style={{height: '400px'}}>
+      <div className="flex-1 bg-white p-4 rounded shadow">
         <h2 className="text-xl font-semibold mb-2 text-center">Category Breakdown</h2>
-        <Pie data={pieData} />
+        <div style={{ width: "50%", margin: "0 auto" }}> {/* Shrinks the chart */}
+          <Pie data={pieData} />
+        </div>
       </div>
+
     </div>
   );
 }
