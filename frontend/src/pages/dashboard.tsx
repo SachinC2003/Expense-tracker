@@ -8,7 +8,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 interface IExpense {

@@ -1,7 +1,6 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 import {
   Select,
   SelectContent,
@@ -17,8 +16,7 @@ interface EditProps {
 }
 
 const Edit: React.FC<EditProps> = ({ isOpen, onClose, data, isExpense }) => {
-  if (!isOpen) return null;
-  const navigator = useNavigate();
+  if (!isOpen) return null
   const [name, setName] = useState(data.name || "");
   const [amount, setAmount] = useState(data.amount || 0);
     const [description, setDescription] = useState(data?.description || "");
@@ -45,11 +43,18 @@ const Edit: React.FC<EditProps> = ({ isOpen, onClose, data, isExpense }) => {
                 date,
                 id: data._id
             });
-            
+            setDate(data.date);
             if(!res.data.success){
                 throw new Error(res.data.message);
-            }
 
+            }
+            if(isExpense){
+               setApiEndpoint("expense/edit");
+               setIsmass("Expense")
+            }else{
+              setApiEndpoint("income/edit");
+               setIsmass("Income")
+            }
             toast.success(`${ismass} Edit successfully`);
             onClose();
             

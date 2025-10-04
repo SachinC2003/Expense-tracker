@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 import {
   Select,
   SelectContent,
@@ -16,7 +15,6 @@ interface AddIncomeProps {
 
 const AddIncome: React.FC<AddIncomeProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
-  const navigator = useNavigate();
   const [name, setName] = useState("");
   const [amount, setAmount] = useState(0);
     const [description, setDescription] = useState("");

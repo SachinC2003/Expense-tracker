@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Charts from "@/components/Chart";
 import { Button } from "@/components/ui/button";
 import AddExpense from "@/components/AddExpense";
@@ -51,7 +51,7 @@ function Expense() {
 
       let topCat = "";
       let topVal = 0;
-      categories.forEach((cat, idx) => {
+      categories.forEach((cat) => {
         const val = categoryTotals[cat] || 0;
         if (val > topVal) {
           topVal = val;

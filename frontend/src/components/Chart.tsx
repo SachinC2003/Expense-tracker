@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -11,7 +11,7 @@ import {
   PointElement,
   LineElement,
 } from "chart.js";
-import { Bar, Pie, Line } from "react-chartjs-2";
+import {Pie, Line } from "react-chartjs-2";
 
 // Register Chart.js components
 ChartJS.register(

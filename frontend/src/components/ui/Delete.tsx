@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, {useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 
 interface DeleteProps {
   isOpen: boolean;
@@ -12,12 +11,6 @@ interface DeleteProps {
 
 const Delete: React.FC<DeleteProps> = ({ isOpen, onClose, data, isExpense }) => {
   if (!isOpen) return null;
-  const navigator = useNavigate();
-  const [name, setName] = useState(data.name || "");
-  const [amount, setAmount] = useState(data.amount || 0);
-    const [description, setDescription] = useState(data?.description || "");
-    const [category, setCategory] = useState(data?.category || "");
-    const [date, setDate] = useState(data.date || new Date());
     const [apiEndpoint, setApiEndpoint] = useState(isExpense ? "expense/delete" : "income/delete");
     const [ismass, setIsmass] = useState(isExpense ? "Expense" : "Income");
 
@@ -28,6 +21,13 @@ const Delete: React.FC<DeleteProps> = ({ isOpen, onClose, data, isExpense }) => 
             
             if(!res.data.success){
                 throw new Error(res.data.message);
+            }
+            if(isExpense){
+               setApiEndpoint("expense/delete");
+               setIsmass("Expense")
+            }else{
+              setApiEndpoint("income/delete");
+               setIsmass("Income")
             }
             toast.success(`${ismass} Delete successfully`);
             onClose();

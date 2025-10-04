@@ -4,7 +4,7 @@ import Edit from "@/components/Edit";
 import { Button } from "@/components/ui/button";
 import Delete from "@/components/ui/Delete";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 interface IIncome {
   name: string;

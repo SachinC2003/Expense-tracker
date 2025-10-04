@@ -3,12 +3,6 @@ import type { CredentialResponse } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-interface GoogleUser {
-  name: string;
-  email: string;
-  picture: string;
-  [key: string]: any;
-}
 
 function Register() {
   const navigate = useNavigate();
