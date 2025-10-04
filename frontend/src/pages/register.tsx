@@ -16,7 +16,7 @@ function Register() {
   const handleLoginSuccess = async (credentialResponse: CredentialResponse) => {
     if (credentialResponse.credential) {
       try {
-        const res = await fetch("http://localhost:5000/api/v1/register/auth", {
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URI}/api/v1/register/auth`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ token: credentialResponse.credential }),

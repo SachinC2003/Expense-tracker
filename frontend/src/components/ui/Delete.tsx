@@ -24,7 +24,7 @@ const Delete: React.FC<DeleteProps> = ({ isOpen, onClose, data, isExpense }) => 
     const handelDelete = async() => {
         try{
             console.log("api res", apiEndpoint);
-        const res = await axios.delete(`http://localhost:5000/api/v1/${apiEndpoint}/${data._id}`);
+        const res = await axios.delete(`${import.meta.env.VITE_BACKEND_URI}/api/v1/${apiEndpoint}/${data._id}`);
             
             if(!res.data.success){
                 throw new Error(res.data.message);

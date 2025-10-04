@@ -25,7 +25,7 @@ const AddIncome: React.FC<AddIncomeProps> = ({ isOpen, onClose }) => {
 
     const handelAddIncome = async() => {
         try{
-            const res = await axios.post("http://localhost:5000/api/v1/income", {
+            const res = await axios.post(`${import.meta.env.VITE_BACKEND_URI}/api/v1/income`, {
                 user:"68de052b7d805221c95e7bc3",
                 name,
                 amount,

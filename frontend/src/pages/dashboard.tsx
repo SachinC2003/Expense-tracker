@@ -48,7 +48,7 @@ function Dash() {
     const totalExpense = Array(12).fill(0);
     const catExpense = Array(4).fill(0);
     try {
-      const res = await axios.get(`http://localhost:5000/api/v1/expense/${year}`);
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URI}/api/v1/expense/${year}`);
       const data = res.data.expense || [];
       setExpenses(data);
 
@@ -79,7 +79,7 @@ function Dash() {
     const totalIncome = Array(12).fill(0);
     const catIncome = Array(4).fill(0);
     try {
-      const res = await axios.get(`http://localhost:5000/api/v1/income/${year}`);
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URI}/api/v1/income/${year}`);
       const data = res.data.income || [];
       setIncomes(data);
 

@@ -36,7 +36,7 @@ const Edit: React.FC<EditProps> = ({ isOpen, onClose, data, isExpense }) => {
     const handelEdit = async() => {
         try{
             console.log("api res", apiEndpoint);
-        const res = await axios.put(`http://localhost:5000/api/v1/${apiEndpoint}`, {
+        const res = await axios.put(`${import.meta.env.VITE_BACKEND_URI}/api/v1/${apiEndpoint}`, {
                 user:"68de052b7d805221c95e7bc3",
                 name,
                 amount,

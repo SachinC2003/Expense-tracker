@@ -25,7 +25,7 @@ const AddExpense: React.FC<AddExpenseProps> = ({ isOpen, onClose }) => {
 
     const handelAddExpense = async() => {
         try{
-            const res = await axios.post("http://localhost:5000/api/v1/expense", {
+            const res = await axios.post(`${import.meta.env.VITE_BACKEND_URI}/api/v1/expense`, {
                 user:"68de052b7d805221c95e7bc3",
                 name,
                 amount,

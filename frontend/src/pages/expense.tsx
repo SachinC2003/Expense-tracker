@@ -32,7 +32,7 @@ function Expense() {
 
   const fetchExpenses = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/v1/expense");
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URI}/api/v1/expense`);
       const data: IExpense[] = response.data.expenses || [];
       setExpenses(data);
       console.log(expenses);
